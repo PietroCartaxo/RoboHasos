@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class MovRodas extends OpMode {
 
     private static final double DEADZONE = 0.05;
-    private static final double MV = 0.5; // limita a potência máxima das rodas (0 a 1)
+    private static final double MV = 0.6; // limita a potência máxima das rodas (0 a 1)
 
     private DcMotor LMF;
     private DcMotor RMF;
@@ -24,10 +24,10 @@ public class MovRodas extends OpMode {
 
     @Override
     public void init() {
-        LMF         = configurarMotor("LMF", DcMotorSimple.Direction.REVERSE);
+        LMF         = configurarMotor("LMF", DcMotorSimple.Direction.FORWARD);
         RMF         = configurarMotor("RMF", DcMotorSimple.Direction.FORWARD);
-        LMB         = configurarMotor("LMB", DcMotorSimple.Direction.REVERSE);
-        RBM         = configurarMotor("RMB", DcMotorSimple.Direction.FORWARD);
+        LMB         = configurarMotor("LMB", DcMotorSimple.Direction.FORWARD);
+        RBM         = configurarMotor("RMB", DcMotorSimple.Direction.REVERSE);
         motorIntOut = configurarMotor("INT", DcMotorSimple.Direction.FORWARD);
 
         telemetry.addData("Status", "Inicializado com sucesso!");
@@ -40,20 +40,17 @@ public class MovRodas extends OpMode {
         double x = aplicarDeadzone(gamepad1.left_stick_x);
         double rx = aplicarDeadzone(gamepad1.right_stick_x);
 
-        double r = Math.hypot(x, y);
-        double robotAngle = Math.atan2(y, x) - Math.PI / 4;
-
-        potenciaFrenteEsquerda   = r * Math.cos(robotAngle) + rx;
-        potenciaFrenteDireita    = r * Math.sin(robotAngle) - rx;
-        potenciaTraseiraEsquerda = r * Math.sin(robotAngle) + rx;
-        potenciaTraseiraDireita  = r * Math.cos(robotAngle) - rx;
+        potenciaFrenteEsquerda   = y + x + rx;
+        potenciaFrenteDireita    = y - x - rx;
+        potenciaTraseiraEsquerda = y - x + rx;
+        potenciaTraseiraDireita  = y + x - rx;
 
         normalizarPotencias();
 
-        LMF.setPower(potenciaFrenteEsquerda * MV);
-        RMF.setPower(potenciaFrenteDireita * MV);
-        LMB.setPower(potenciaTraseiraEsquerda * MV);
-        RBM.setPower(potenciaTraseiraDireita * MV);
+        LMF.setPower(potenciaFrenteEsquerda*MV);
+        RMF.setPower(potenciaFrenteDireita*MV);
+        LMB.setPower(potenciaTraseiraEsquerda*MV);
+        RBM.setPower(potenciaTraseiraDireita*MV);
 
         double potenciaIntOut = calcularPotenciaIntOut();
         motorIntOut.setPower(potenciaIntOut);
@@ -77,9 +74,9 @@ public class MovRodas extends OpMode {
     }
 
     private double calcularPotenciaIntOut() {
-        if (gamepad1.a) {
+        if (gamepad1.right_trigger) {
             return 1.0;
-        } else if (gamepad1.b) {
+        } else if (gamepad1.left_trigger) {
             return -1.0;
         } else {
             return 0.0;
