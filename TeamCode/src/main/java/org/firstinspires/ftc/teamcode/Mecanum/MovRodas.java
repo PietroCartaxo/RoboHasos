@@ -74,9 +74,9 @@ public class MovRodas extends OpMode {
     }
 
     private double calcularPotenciaIntOut() {
-        if (gamepad1.right_trigger) {
+        if (gamepad1.right_trigger > 0.1) {
             return 1.0;
-        } else if (gamepad1.left_trigger) {
+        } else if (gamepad1.left_trigger > 0.1) {
             return -1.0;
         } else {
             return 0.0;
