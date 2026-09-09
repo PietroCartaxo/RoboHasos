@@ -89,14 +89,31 @@ public class AutonomoAzul extends OpMode {
 
             case 9: // Desliga outtake, 90 cm para a esquerda
                 motorIntOut.setPower(0);
-                esquerda();
-                avancarSe(597);
+                direita();
+                avancarSe(1000);
                 break;
 
-            case 10: // 229 cm para cima
-                frente();
-                avancarSe(1519);
+            case 10: // 58 cm para a direita
+                direita();
+                avancarSe(1000);
                 break;
+
+            case 11: // 230 cm para cima
+                frente();
+                avancarSe(2000);
+                break;
+
+            case 12: // 150 cm para a direita
+                direita();
+                avancarSe(1850);
+                break;
+
+            case 13: // 30 cm para frente
+                frente();
+                avancarSe(300);
+                break;
+
+
 
             default: // Fim do autônomo
                 parar();
