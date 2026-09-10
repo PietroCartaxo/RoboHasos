@@ -156,6 +156,15 @@ public class AutonomoAzul extends OpMode {
         aplicarPotencias(1, -1, -1, 1);
     }
 
+    private void rxdireita() {
+        aplicarPotencias(1, -1, 1, -1);
+    }
+
+    private void rxesquerda() {
+        aplicarPotencias(-1, 1, -1, 1);
+    }
+
+
     private void aplicarPotencias(double fe, double fd, double te, double td) {
         potenciaFrenteEsquerda   = fe;
         potenciaFrenteDireita    = fd;
