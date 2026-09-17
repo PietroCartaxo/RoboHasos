@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "AutonomoAzul", group = "Autonomous")
+@Autonomous
 public class AutonomoVermelho extends OpMode {
 
     private static final double MV = 0.4; // limita a potência máxima das rodas (0 a 1)
@@ -42,76 +43,26 @@ public class AutonomoVermelho extends OpMode {
     @Override
     public void loop() {
         switch (passo) {
-            case 0: // 60 cm para a esquerda
+            case 0: // 60 cm para a direita
                 esquerda();
                 avancarSe(1200);
                 break;
 
-            case 1: // 245 cm para cima
+            case 1:
+                rxesquerda();
+                avancarSe(70);
+                break;
+
+
+
+
+            case 2: // 245 cm para cima
                 frente();
-                avancarSe(2600);
+                avancarSe(2650);
                 break;
 
-            case 2: // 150 cm para a direita
-                direita();
-                avancarSe(1850);
-                break;
 
-            case 3: // 72 cm para a frente
-                frente();
-                avancarSe(650);
-                break;
 
-            case 4: // Liga intake pra depositar os cargos
-                motorIntOut.setPower(-1.0);
-                avancarSe(800);
-                break;
-
-            case 5: // Desliga intake, 90 cm para a direita
-                motorIntOut.setPower(0);
-                avancarSe(600);
-                break;
-
-            case 6: // 245 cm para baixo
-                tras();
-                avancarSe(2200);
-                break;
-
-            case 7: // 58 cm para a direita
-                direita();
-                avancarSe(1000);
-                break;
-
-            case 8: // Liga outtake pra depositar os cargos
-                motorIntOut.setPower(1.0);
-                avancarSe(800);
-                break;
-
-            case 9: // Desliga outtake, 90 cm para a direita
-                motorIntOut.setPower(0);
-                esquerda();
-                avancarSe(1000);
-                break;
-
-            case 10: // 58 cm para a esquerda
-                esquerda();
-                avancarSe(1000);
-                break;
-
-            case 11: // 230 cm para cima
-                frente();
-                avancarSe(2000);
-                break;
-
-            case 12: // 150 cm para a esquerda
-                esquerda();
-                avancarSe(1850);
-                break;
-
-            case 13: // 30 cm para frente
-                frente();
-                avancarSe(300);
-                break;
 
 
 
@@ -154,6 +105,14 @@ public class AutonomoVermelho extends OpMode {
 
     private void direita() {
         aplicarPotencias(1, -1, -1, 1);
+    }
+
+    private void rxdireita() {
+        aplicarPotencias(1, -1, 1, -1);
+    }
+
+    private void rxesquerda() {
+        aplicarPotencias(-1, 1, -1, 1);
     }
 
     private void aplicarPotencias(double fe, double fd, double te, double td) {

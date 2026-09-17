@@ -80,7 +80,7 @@ public class MovRodas extends OpMode {
         if (gamepad1.right_trigger > 0.1) {
             return -1.0;
         } else if (gamepad1.left_trigger > 0.1) {
-            return 1.0;
+            return 0.7;
         } else {
             return 0.0;
         }

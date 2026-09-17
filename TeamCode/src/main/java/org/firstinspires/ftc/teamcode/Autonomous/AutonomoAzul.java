@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "AutonomoAzul", group = "Autonomous")
+@Autonomous
 public class AutonomoAzul extends OpMode {
 
     private static final double MV = 0.4; // limita a potência máxima das rodas (0 a 1)
@@ -47,71 +48,18 @@ public class AutonomoAzul extends OpMode {
                 avancarSe(1200);
                 break;
 
-            case 1: // 245 cm para cima
+            case 1:
+                rxdireita();
+                avancarSe(110);
+                break;
+
+
+            case 2: // 245 cm para cima
                 frente();
-                avancarSe(2600);
+                avancarSe(3000);
                 break;
 
-            case 2: // 150 cm para a esquerda
-                esquerda();
-                avancarSe(1850);
-                break;
 
-            case 3: // 72 cm para a frente
-                frente();
-                avancarSe(650);
-                break;
-
-            case 4: // Liga intake pra depositar os cargos
-                motorIntOut.setPower(-1.0);
-                avancarSe(800);
-                break;
-
-            case 5: // Desliga intake, 90 cm para a esquerda
-                motorIntOut.setPower(0);
-                avancarSe(600);
-                break;
-
-            case 6: // 245 cm para baixo
-                tras();
-                avancarSe(2200);
-                break;
-
-            case 7: // 58 cm para a esquerda
-                esquerda();
-                avancarSe(1000);
-                break;
-
-            case 8: // Liga outtake pra depositar os cargos
-                motorIntOut.setPower(1.0);
-                avancarSe(800);
-                break;
-
-            case 9: // Desliga outtake, 90 cm para a esquerda
-                motorIntOut.setPower(0);
-                direita();
-                avancarSe(1000);
-                break;
-
-            case 10: // 58 cm para a direita
-                direita();
-                avancarSe(1000);
-                break;
-
-            case 11: // 230 cm para cima
-                frente();
-                avancarSe(2000);
-                break;
-
-            case 12: // 150 cm para a direita
-                direita();
-                avancarSe(1850);
-                break;
-
-            case 13: // 30 cm para frente
-                frente();
-                avancarSe(300);
-                break;
 
 
 
