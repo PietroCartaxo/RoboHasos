@@ -36,8 +36,8 @@ public class MovRodas extends OpMode {
 
     @Override
     public void loop() {
-        double y = aplicarDeadzone(-gamepad1.left_stick_y);
-        double x = aplicarDeadzone(gamepad1.left_stick_x);
+        double y = aplicarDeadzone(-gamepad1.left_stick_x);
+        double x = aplicarDeadzone(-gamepad1.left_stick_y);
         double rx = aplicarDeadzone(gamepad1.right_stick_x);
 
         potenciaFrenteEsquerda   = y + x + rx;
