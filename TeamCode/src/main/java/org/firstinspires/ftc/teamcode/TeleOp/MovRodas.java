@@ -28,7 +28,7 @@ public class MovRodas extends OpMode {
         LMF = configurarMotor("LMF", DcMotorSimple.Direction.FORWARD);
         RMF = configurarMotor("RMF", DcMotorSimple.Direction.FORWARD);
         LMB = configurarMotor("LMB", DcMotorSimple.Direction.FORWARD);
-        RBM = configurarMotor("RMB", DcMotorSimple.Direction.REVERSE);
+        RBM = configurarMotor("RMB", DcMotorSimple.Direction.FORWARD);
 
         telemetry.addData("Status", "Inicializado com sucesso!");
         telemetry.update();
@@ -36,8 +36,8 @@ public class MovRodas extends OpMode {
 
     @Override
     public void loop() {
-        double y = aplicarDeadzone(-gamepad1.left_stick_x);
-        double x = aplicarDeadzone(-gamepad1.left_stick_y);
+        double y = aplicarDeadzone(-gamepad1.left_stick_y);
+        double x = aplicarDeadzone(gamepad1.left_stick_x);
         double rx = aplicarDeadzone(gamepad1.right_stick_x);
 
         potenciaFrenteEsquerda   = y + x + rx;
