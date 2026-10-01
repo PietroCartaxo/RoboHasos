@@ -2,10 +2,14 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "MovRodas Mecanum", group = "TeleOp")
 public class MovRodas extends OpMode {
@@ -16,7 +20,9 @@ public class MovRodas extends OpMode {
     private DcMotor LMF;
     private DcMotor RMF;
     private DcMotor LMB;
-    private DcMotor RBM;
+    private DcMotor RMB; // Corrigido de RBM para RMB
+
+    private IMU imu; // Variável da IMU
 
     private double potenciaFrenteEsquerda;
     private double potenciaFrenteDireita;
@@ -25,10 +31,18 @@ public class MovRodas extends OpMode {
 
     @Override
     public void init() {
-        LMF = configurarMotor("LMF", DcMotorSimple.Direction.FORWARD);
-        RMF = configurarMotor("RMF", DcMotorSimple.Direction.FORWARD);
-        LMB = configurarMotor("LMB", DcMotorSimple.Direction.FORWARD);
-        RBM = configurarMotor("RMB", DcMotorSimple.Direction.FORWARD);
+        LMF = configurarMotor("leftFront", DcMotorSimple.Direction.FORWARD);
+        RMF = configurarMotor("rightFront", DcMotorSimple.Direction.FORWARD);
+        LMB = configurarMotor("leftBack", DcMotorSimple.Direction.FORWARD);
+        RMB = configurarMotor("rightBack", DcMotorSimple.Direction.FORWARD);
+
+        // Inicialização e configuração da IMU interna do Control Hub
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
+        ));
+        imu.initialize(parameters);
 
         telemetry.addData("Status", "Inicializado com sucesso!");
         telemetry.update();
@@ -47,14 +61,20 @@ public class MovRodas extends OpMode {
 
         normalizarPotencias();
 
+        // Aplicando a potência multiplicada pelo limitador MV (com o '*' corrigido)
         LMF.setPower(potenciaFrenteEsquerda * MV);
         RMF.setPower(potenciaFrenteDireita * MV);
         LMB.setPower(potenciaTraseiraEsquerda * MV);
-        RBM.setPower(potenciaTraseiraDireita * MV);
+        RMB.setPower(potenciaTraseiraDireita * MV);
 
+        // Leitura do ângulo da IMU para teste e aprendizado
+        double robotHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+
+        // Envia os dados para a Telemetry do Driver Hub
         telemetry.addData("Motores", "FE (%.2f), FD (%.2f), TE (%.2f), TD (%.2f)",
                 potenciaFrenteEsquerda, potenciaFrenteDireita,
                 potenciaTraseiraEsquerda, potenciaTraseiraDireita);
+        telemetry.addData("IMU Heading (graus)", "%.2f", robotHeading);
         telemetry.update();
     }
 
