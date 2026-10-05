@@ -1,4 +1,4 @@
-package com.example.MeepMeep;
+package com.example.meepmeep;
 
 import org.junit.Test;
 
